@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 Career Guidance Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            scroll-behavior: smooth;
+            max-height: calc(100vh - 200px);
+            min-height: 300px;
+        }
+
+        .question-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .answer-display {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .answer-text {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .career-suggestions {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .suggestions-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .suggestion-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-button {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .profile-setup {
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 120px);
+        }
+
+        .profile-section {
+            margin-bottom: 25px;
+        }
+
+        .profile-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .option-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .option-button {
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .option-button:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option-button.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .submit-profile {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .submit-profile:hover {
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+            background: white;
+        }
+
+        .text-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .text-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .profile-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .profile-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .profile-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-profile-button {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .send-profile-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #ffcdd2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            🎓 Career Guidance Chatbot
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="welcome-message">
+                Welcome! I'm here to help you explore career options. Let me ask you a few questions to provide personalized guidance.
+            </div>
+            
+            <div id="question-container" class="question-container">
+                <div class="question-text" id="current-question">
+                    What are your interests? (e.g., technology, art, science, etc.)
+                </div>
+                <div class="profile-input-wrapper">
+                    <input type="text" class="profile-input" id="profile-input" placeholder="Type your answer here..." onkeypress="handleProfileKeyPress(event)">
+                    <button class="send-profile-button" onclick="sendProfileAnswer()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userProfile = {};
+        let currentQuestion = 0;
+        const questions = [
+            "What are your interests? (e.g., technology, art, science, etc.)",
+            "What are your skills? (e.g., coding, drawing, communication, etc.)",
+            "What were your favorite subjects? (e.g., math, biology, computer science, etc.)"
+        ];
+
+        function showAnswer(answer, label) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const answerDiv = document.createElement('div');
+            answerDiv.className = 'answer-display';
+            answerDiv.innerHTML = `
+                <div class="answer-label">${label}:</div>
+                <div class="answer-text">${answer}</div>
+            `;
+            messagesContainer.appendChild(answerDiv);
+        }
+
+        function showLoading() {
+            const messagesContainer = document.getElementById('chat-messages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading';
+            loadingDiv.id = 'loading-indicator';
+            loadingDiv.textContent = 'Analyzing your profile and generating career suggestions...';
+            messagesContainer.appendChild(loadingDiv);
+        }
+
+        function removeLoading() {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            if (loadingIndicator) {
+                loadingIndicator.remove();
+            }
+        }
+
+        function showCareerSuggestions(suggestions) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const suggestionsDiv = document.createElement('div');
+            suggestionsDiv.className = 'career-suggestions';
+            suggestionsDiv.innerHTML = `
+                <div class="suggestions-title">🎯 Career Suggestions for You</div>
+                <div class="suggestion-item">${suggestions}</div>
+            `;
+            messagesContainer.appendChild(suggestionsDiv);
+        }
+
+        function showRestartButton() {
+            const messagesContainer = document.getElementById('chat-messages');
+            const buttonDiv = document.createElement('div');
+            buttonDiv.style.textAlign = 'center';
+            buttonDiv.style.marginTop = '20px';
+            
+            const restartButton = document.createElement('button');
+            restartButton.textContent = 'Start Over';
+            restartButton.className = 'submit-profile';
+            restartButton.onclick = restartChat;
+            
+            buttonDiv.appendChild(restartButton);
+            messagesContainer.appendChild(buttonDiv);
+        }
+
+        async function sendProfileAnswer() {
+            const input = document.getElementById('profile-input');
+            const answer = input.value.trim();
+            
+            if (!answer) return;
+            
+            // Store the answer
+            if (currentQuestion === 0) {
+                userProfile.interests = answer;
+                showAnswer(answer, 'Your Interests');
+            } else if (currentQuestion === 1) {
+                userProfile.skills = answer;
+                showAnswer(answer, 'Your Skills');
+            } else if (currentQuestion === 2) {
+                userProfile.favorite_subjects = answer;
+                showAnswer(answer, 'Your Favorite Subjects');
+            }
+            
+            input.value = '';
+            currentQuestion++;
+       
+            if (currentQuestion < questions.length) {
+                // Show next question
+                document.getElementById('current-question').textContent = questions[currentQuestion];
+            } else {
+                // Profile complete, get AI suggestions
+                document.getElementById('question-container').style.display = 'none';
+                
+                setTimeout(() => {
+                    showLoading();
+                    getAICareerSuggestions();
+                }, 1000);
+            }
+        }
+
+        async function getAICareerSuggestions() {
+            try {
+                const response = await fetch('/api/generate-suggestions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userProfile: userProfile
+                    })
+                });
+                
+                const data = await response.json();
+                removeLoading();
+                
+                if (data.success) {
+                    showCareerSuggestions(data.response);
+                    setTimeout(() => {
+                        showRestartButton();
+                    }, 2000);
+                } else {
+                    const messagesContainer = document.getElementById('chat-messages');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.textContent = `Sorry, I encountered an error: ${data.error}`;
+                    messagesContainer.appendChild(errorDiv);
+                }
+            } catch (error) {
+                removeLoading();
+                const messagesContainer = document.getElementById('chat-messages');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.textContent = 'Sorry, I couldn\'t connect to the AI service. Please try again later.';
+                messagesContainer.appendChild(errorDiv);
+                console.error('Error:', error);
+            }
+        }
+
+        function restartChat() {
+            userProfile = {};
+            currentQuestion = 0;
+            
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.innerHTML = `
+                <div class="welcome-message">
+                    Welcome! I'm here to help you explore career options. Let me ask you a few questions to provide personalized guidance.
+                </div>
+                <div id="question-container" class="question-container">
+                    <div class="question-text" id="current-question">
+                        ${questions[currentQuestion]}
+                    </div>
+                    <div class="profile-input-wrapper">
+                        <input type="text" class="profile-input" id="profile-input" placeholder="Type your answer here..." onkeypress="handleProfileKeyPress(event)">
+                        <button class="send-profile-button" onclick="sendProfileAnswer()">Submit</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleProfileKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendProfileAnswer();
+            }
+        }
+    </script>
+</body>
+</html> 
