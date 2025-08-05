@@ -1,83 +1,72 @@
-# Career Guidance Chatbot
+🎓 Career Guidance Chatbot
+An AI-powered career guidance assistant that uses the OpenRouter API to provide personalized career advice through both a web interface and command-line chatbot.
 
-An AI-powered career guidance assistant that uses OpenRouter API to provide personalized career advice.
+✨ Features
+🧠 AI chatbot for interactive career guidance (Web + CLI)
 
-## Features
+🎯 Personalized suggestions based on:
+Interests
+Skills
+Favorite subjects
 
-- Interactive career guidance chatbot (Web interface + Command line)
-- Personalized career suggestions based on interests, skills, and favorite subjects
-- Uses OpenRouter API with Claude 3.5 Sonnet model
-- Beautiful web interface with real-time chat
-- Follow-up questions and detailed career discussions
+🤖 Powered by OpenRouter’s Claude 3.5 Sonnet model
 
-## Setup
+💬 Beautiful real-time chat interface (Flask web app)
 
-### 1. Install Dependencies
+🔁 Handles follow-up questions for deeper career exploration
 
-```bash
-pip install -r requirements.txt
-```
+⚙️ Setup
+1. Install Dependencies
 
-### 2. Get OpenRouter API Key
+2. Get an OpenRouter API Key
+Go to https://openrouter.ai
+Sign up or log in
+Navigate to your account and generate an API key
 
-1. Go to [OpenRouter](https://openrouter.ai/keys)
-2. Sign up or log in
-3. Create a new API key
-4. Copy the API key
 
-### 3. Configure API Key
-
-**Option A: Use the setup script (Recommended)**
-```bash
+3. Configure the API Key
+Option A: Use the setup script (Recommended)
 python setup.py
-```
+Option B: Manual Setup
+Edit the config.env file and replace:
+env
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 
-**Option B: Manual configuration**
-1. Edit `config.env` file
-2. Replace `your_openrouter_api_key_here` with your actual API key
-
-## Usage
-
-### Web Interface (Recommended)
+🚀 Usage
+Web Interface (Recommended)
 Run the web server:
-```bash
 python app.py
-```
+Then open your browser and go to:
+👉 http://localhost:5000
 
-Then open your browser and go to: http://localhost:5000
+Command-Line Interface (CLI)
+Run the chatbot in your terminal:
+python app.py
 
-### Command Line Interface
-Run the chatbot in terminal:
-```bash
-python gemini.py
-```
 
-Both versions will:
-1. Ask about your interests (Art, Technology, Cybersecurity, Data, Networking, Business)
-2. Ask about your skills (Coding, Drawing, Database, Troubleshooting, Communication, Problem solving)
-3. Ask about your favorite subjects (Math, Biology, Language, Computer Science, Statistics, Physics, Chemistry, History)
-4. Provide personalized career suggestions using OpenRouter API
-5. Allow follow-up questions about careers
+💡 How It Works
+Both interfaces will:
 
-## Configuration
+Ask about your interests (e.g., Art, Technology, Cybersecurity, etc.)
+Ask about your skills (e.g., Coding, Drawing, Problem Solving, etc.)
+Ask about your favorite subjects (e.g., Math, Computer Science, History, etc.)
+Use your responses to generate tailored career suggestions
+Allow you to ask follow-up questions about any career path
 
-The chatbot uses:
-- **API**: OpenRouter (https://openrouter.ai/api/v1)
-- **Model**: Claude 3.5 Sonnet (anthropic/claude-3.5-sonnet)
-- **Configuration**: `config.env` file
+⚙️ Configuration
+Key Component	Value
+API Provider	OpenRouter
+AI Model	anthropic/claude-3.5-sonnet
+Config File	.env
 
-## Files
 
-- `app.py` - Flask web server (main application)
-- `gemini.py` - Command line chatbot application
-- `templates/index.html` - Web interface HTML template
-- `setup.py` - Interactive setup script
-- `config.env` - API configuration file
-- `requirements.txt` - Python dependencies
-- `README.md` - This documentation
+🛠 Troubleshooting
+"OPENROUTER_API_KEY not found"
+Make sure your API key is set correctly in .env.
 
-## Troubleshooting
+401 Unauthorized or API errors
 
-- **"OPENROUTER_API_KEY not found"**: Make sure you've set up your API key in `config.env`
-- **API errors**: Check your OpenRouter account for API key validity and usage limits
-- **Import errors**: Install required packages with `pip install -r requirements.txt` 
+Ensure your key is valid on OpenRouter
+
+Check your account limits
+
