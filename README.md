@@ -26,11 +26,8 @@ Navigate to your account and generate an API key
 
 
 3. Configure the API Key
-Option A: Use the setup script (Recommended)
-python setup.py
-Option B: Manual Setup
-Edit the config.env file and replace:
-env
+Manual Setup
+Edit the config.env file and replace: env
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 
 🚀 Usage
@@ -59,16 +56,5 @@ Key Component	Value
 API Provider	OpenRouter
 AI Model	anthropic/claude-3.5-sonnet
 Config File	.env
-
-
-🛠 Troubleshooting
-"OPENROUTER_API_KEY not found"
-Make sure your API key is set correctly in .env.
-
-401 Unauthorized or API errors
-
-Ensure your key is valid on OpenRouter
-
-Check your account limits
 
 
