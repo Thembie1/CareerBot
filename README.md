@@ -1,4 +1,5 @@
 🎓 Career Guidance Chatbot
+
 An AI-powered career guidance assistant that uses the OpenRouter API to provide personalized career advice through both a web interface and command-line chatbot.
 
 ✨ Features
@@ -69,4 +70,5 @@ Make sure your API key is set correctly in .env.
 Ensure your key is valid on OpenRouter
 
 Check your account limits
+
 
